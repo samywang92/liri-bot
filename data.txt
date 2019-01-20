@@ -4,3 +4,6 @@ spotify-this-song,
 spotify-this-song, ocean avenue
 do-what-it-says, "I Want it That Way"
 movie-this, star wars
+spotify-this-song, ocean avenue
+movie-this, star wars
+do-what-it-says, "I Want it That Way"
