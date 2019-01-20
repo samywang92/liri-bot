@@ -6,25 +6,35 @@
 require("dotenv").config();
 
 //var request = require('request');
-var Spotify = require("./spotify.js")
-var Movie = require("./movie.js")
+var Spotify = require("./spotify.js");
+var Movie = require("./movie.js");
+var fs = require("fs");
 var moment = require('moment');
 
 var userInput = process.argv.splice(3).join(" "); // array of inputs in the search
+var userChoice = process.argv[2];
 
-if (process.argv[2] === "concert-this") {
-    //will come back
-    concert();
-} else if (process.argv[2] === "spotify-this-song") {
-    var mySong = new Spotify(userInput);
-    mySong.getSong();
-} else if (process.argv[2] === "movie-this") {
-    var myMovie = new Movie(userInput);
-    myMovie.getMovie();
-} else if (process.argv[2] === "do-what-it-says") {
-    doit();
-} else {
-    console.log("Did you mean siri?")
+initLiri(userChoice,userInput);
+
+function initLiri(input, input2){
+    if (input === "concert-this") {
+        //will come back
+        concert();
+        exportTF(input2);
+    } else if (input === "spotify-this-song") {
+        var mySong = new Spotify(input2);
+        mySong.getSong();
+        exportTF(input2);
+    } else if (input === "movie-this") {
+        var myMovie = new Movie(input2);
+        myMovie.getMovie();
+        exportTF(input2);
+    } else if (input === "do-what-it-says") {
+        doit();
+    } else {
+        console.log("Did you mean siri?");
+        exportTF(input2);
+    }
 }
 
 
@@ -33,7 +43,19 @@ function concert() {
 }
 
 function doit() {
+    var read;
+    fs.readFile("random.txt", "utf8", function(err, data){
+        if(err) console.err(err);
+        read = data.split(",");
+        initLiri(read[0],read[1]);
+    });
+}
 
+function exportTF(uVal){
+    fs.appendFile("data.txt", `${process.argv[2]}, ${uVal}\n`, function(err){
+        if(err) console.err(err);
+        console.log("Command exported to data.txt!");
+    })
 }
 
 

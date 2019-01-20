@@ -10,7 +10,12 @@ var Spotify = require('node-spotify-api');
 var axios = require("axios");
 var moment = require('moment');
 
-var spotify = new Spotify(keys.spotify);
+// var spotify = new Spotify(keys.spotify);
+
+var spotify = new Spotify({
+    id: "b4fc7a2b521e4b918598cf7518367e00",
+    secret: "0a75822bbaf141d59af3e592a1177522"
+  });
 
 var userInput = process.argv.splice(3).join(" "); // array of inputs in the search
 
@@ -71,19 +76,21 @@ function concert() {
 
 function doit() {
     //console.log("came in here");
-    // spotify.search({ type: 'track', query: 'The Sign' , limit: 10}, function(err, data) {
-    //     if (err) {
-    //       return console.log('Error occurred: ' + err);
-    //     }
+    spotify.search({ type: 'track', query: 'The Sign' , limit: 10}, function(err, data) {
+        if (err) {
+          return console.log('Error occurred: ' + err);
+        }
 
-    //   console.log(data); 
-    //   //clconsole.log(data.tracks.items[0]);
-    //   console.log(`Track: ${data.tracks.items[9].name}`);
-    //   console.log(`Artist: ${data.tracks.items[9].artists[0].name}`);
-    //   console.log(`Link: ${data.tracks.items[9].href}`);
-    //   console.log(`Album: ${data.tracks.items[9].album.name}`);
-    //   });
+      console.log(data); 
+      //clconsole.log(data.tracks.items[0]);
+      console.log(`Track: ${data.tracks.items[9].name}`);
+      console.log(`Artist: ${data.tracks.items[9].artists[0].name}`);
+      console.log(`Link: ${data.tracks.items[9].href}`);
+      console.log(`Album: ${data.tracks.items[9].album.name}`);
+      });
 
 }
+
+doit()
 
 
